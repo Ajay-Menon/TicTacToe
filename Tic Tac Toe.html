@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Ajay Menon">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <style type="text/css">
+        body
+        {
+            text-align: center;
+            background-color: #0066FF;
+        }
+        .Content1
+        {
+            background-color: green;
+            margin-top: -70px;
+            margin-left: -10px;
+            margin-right: -10px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            padding-left: 20px;
+            text-align: left;
+            font-family: Algerian;
+            font-size: 50px;
+        }
+        .box
+        {
+            text-align: center;
+            width: auto;
+            height: auto;
+        }
+        canvas
+        {
+            position: relative;
+            background-color: white;
+        }
+    </style>
+    <script type="text/javascript">
+        var filled;
+        var content;
+        var solutions;
+        var Chance=0;
+        var Board;
+        var c;
+        var Write;
+        var Occupied = 0;
+        var w;
+        var y;
+        window.onload=function()
+        {
+            filled=new Array();
+            content=new Array();
+            solutions = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            for(var l = 0; l <= 8; l++)
+            {
+                filled[l] = false;
+                content[l]='';
+            }
+        }
+        function Selection(Number)
+        {
+            Board = "canvas"+Number;
+            c = document.getElementById(Board);
+            Write = c.getContext("2d");
+            if(filled[Number-1] ==false)
+            {
+                if(Chance%2==0)
+                {
+                    Write.beginPath();
+                    Write.moveTo(10,10);
+                    Write.lineTo(50,50);
+                    Write.moveTo(50,10);
+                    Write.lineTo(10,50);
+                    Write.stroke();
+                    Write.closePath();
+                    content[Number-1] = 'X';
+                }
+                else
+                {
+                    Write.beginPath();
+                    Write.arc(30,30,25,0,Math.PI*2,true);
+                    Write.stroke();
+                    Write.closePath();
+                    content[Number-1] = 'O';
+                }
+                Chance++;
+                filled[Number-1] = true;
+                Occupied++;
+                Success(content[Number-1]);
+                    if(Occupied==9)
+                    {
+                        alert("Game completed");
+                        Again();
+                    }
+            }
+            else
+            {
+                alert("Square already filled");
+            }
+        }
+        function Success(symbol)
+        {
+            for(var a = 0; a < solutions.length; a++)
+            {
+                if(content[solutions[a][0]]==symbol&&content[solutions[a][1]]== symbol&&content[solutions[a][2]]==symbol)
+                    {
+                        alert(symbol+ " won the game");
+                        Again();
+                    }
+            }
+        }
+        function Again()
+        {
+            y=confirm("Want to play another game?");
+            if(y==true)
+            {
+                location.reload(true);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="Content1">
+        <h1>Tic Tac Toe</h1>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="Board" id ="box">
+        <canvas id = "canvas1"  width="60" height="60" style="border:2px solid black" onclick="Selection(1)"></canvas>
+        <canvas id = "canvas2"  width="60" height="60" style="border:2px solid black" onclick="Selection(2)"></canvas>
+        <canvas id = "canvas3"  width="60" height="60" style="border:2px solid black" onclick="Selection(3)"></canvas>
+        <br>
+        <canvas id = "canvas4"  width="60" height="60" style="border:2px solid black" onclick="Selection(4)"></canvas>
+        <canvas id = "canvas5"  width="60" height="60" style="border:2px solid black" onclick="Selection(5)"></canvas>
+        <canvas id = "canvas6"  width="60" height="60" style="border:2px solid black" onclick="Selection(6)"></canvas>
+        <br>
+        <canvas id = "canvas7"  width="60" height="60" style="border:2px solid black" onclick="Selection(7)"></canvas>
+        <canvas id = "canvas8"  width="60" height="60" style="border:2px solid black" onclick="Selection(8)"></canvas>
+        <canvas id = "canvas9"  width="60" height="60" style="border:2px solid black" onclick="Selection(9)"></canvas>
+        <br>
+    </div>
+</body>
+</html>
